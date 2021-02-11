@@ -1,18 +1,24 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <RecipeList :recipes="recipes" />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import { useStore } from 'vuex'
+import { computed } from 'vue'
+import RecipeList from '../components/RecipeList'
 
 export default {
   name: 'Home',
-  components: {
-    HelloWorld
-  }
+  components: { RecipeList },
+  setup() {
+    const store = useStore()
+    const recipes = computed(() => {
+      return store.state.recipes
+    })
+
+    return { recipes }
+  },
 }
 </script>
