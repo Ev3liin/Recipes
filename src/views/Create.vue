@@ -5,6 +5,8 @@
       <input class="input" v-model="name" type="text" required />
       <label class="label">Description:</label>
       <textarea class="textarea" v-model="description" required></textarea>
+      <label class="label">Image:</label>
+      <input class="input" type="file" @change="onFileSelected" />
       <label class="label">Time to prepare:</label>
       <input class="input" v-model="prepare" type="number" required />
       <button class="btn">Add Post</button>
@@ -14,8 +16,7 @@
 
 <script>
 import { useStore } from 'vuex'
-import { computed } from 'vue'
-import { ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 export default {
@@ -24,23 +25,42 @@ export default {
     const name = ref('')
     const description = ref('')
     const prepare = ref(null)
+    const image = ref(null)
     const router = useRouter()
 
+    const onFileSelected = e => {
+      const file = e.target.files[0]
+      if (!file.type.includes('image/')) {
+        alert('Please select an image file')
+        return
+      }
+      if (typeof FileReader === 'function') {
+        const reader = new FileReader()
+        reader.onload = event => {
+          image.value = event.target.result
+        }
+        reader.readAsDataURL(file)
+      } else {
+        alert('Sorry, this file is not supported')
+      }
+    }
+
     const handleSubmit = () => {
-      const recipe = computed(() => {
-        return store.commit('addRecipe', {
-          id: Math.floor(Math.random() * 10000),
-          name: name.value,
-          description: description.value,
-          time_to_prepare: prepare.value,
-        })
+      let recipe = {
+        id: Math.floor(Math.random() * 10000),
+        name: name.value,
+        description: description.value,
+        time_to_prepare: prepare.value,
+        image: image.value,
+      }
+      const result = computed(() => {
+        return store.commit('ADD_RECIPE', recipe)
       })
 
-      console.log(recipe)
       // router.push({ name: 'Home' })
     }
 
-    return { handleSubmit }
+    return { handleSubmit, name, description, prepare, onFileSelected }
   },
 }
 </script>

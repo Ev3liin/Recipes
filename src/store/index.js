@@ -2,42 +2,27 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    recipes: [
-      {
-        name: 'Burger',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus consequuntur iure, officiis eum doloremque est aperiam rerum, minima voluptatem harum eveniet in modi tenetur eius vero? Impedit cupiditate error placeat.',
-        time_to_prepare: 50,
-        image: require('../assets/burger.jpg'),
-        id: 1,
-      },
-      {
-        name: 'Spaghetti',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus consequuntur iure, officiis eum doloremque est aperiam rerum, minima voluptatem harum eveniet in modi tenetur eius vero? Impedit cupiditate error placeat.',
-        time_to_prepare: 50,
-        image: require('../assets/spaghetti.jpg'),
-        id: 2,
-      },
-      {
-        name: 'Sweets',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus consequuntur iure, officiis eum doloremque est aperiam rerum, minima voluptatem harum eveniet in modi tenetur eius vero? Impedit cupiditate error placeat.',
-        time_to_prepare: 50,
-        image: require('../assets/sweets.jpg'),
-        id: 3,
-      },
-    ],
+    recipes: [],
   },
   mutations: {
-    addRecipe(state, recipe) {
+    SET_RECIPES(state, recipes) {
+      state.recipes = recipes
+    },
+    ADD_RECIPE(state, recipe) {
       state.recipes.push(recipe)
     },
   },
-  actions: {},
+  actions: {
+    fetchRecipes({ commit }) {
+      fetch('http://localhost:3000/recipes')
+        .then(res => res.json())
+        .then(data => commit('SET_RECIPES', data))
+        .catch(err => console.log(err.message))
+    },
+  },
   getters: {
-    getbyId(state) {
-      return id => state.recipes.find(recipe => recipe.id === id)
+    getRecipeById: state => id => {
+      return state.recipes.find(recipe => recipe.id === id)
     },
   },
   modules: {},

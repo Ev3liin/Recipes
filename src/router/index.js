@@ -19,6 +19,16 @@ const routes = [
     name: 'Details',
     component: Details,
     props: true,
+    children: [
+      {
+        path: 'update',
+        component: null,
+      },
+    ],
+  },
+  {
+    path: '/notFound(.*)',
+    component: null,
   },
 ]
 

@@ -14,8 +14,14 @@ export default {
   components: { RecipeList },
   setup() {
     const store = useStore()
+
     const recipes = computed(() => {
-      return store.state.recipes
+      if (store.state.recipes.length == 0) {
+        store.dispatch('fetchRecipes')
+        return store.state.recipes
+      } else {
+        return store.state.recipes
+      }
     })
 
     return { recipes }

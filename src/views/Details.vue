@@ -13,7 +13,7 @@ export default {
   setup(props) {
     const store = useStore()
     const recipe = computed(() => {
-      return store.getters.getById(props.id)
+      return store.getters.getRecipeById(props.id)
     })
 
     console.log(recipe)
