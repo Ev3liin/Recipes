@@ -15,20 +15,17 @@
 </template>
 
 <script>
-import { useStore } from 'vuex'
-import { computed, onMounted, ref } from 'vue'
-import { useRouter } from 'vue-router'
-
 export default {
-  setup() {
-    const store = useStore()
-    const name = ref('')
-    const description = ref('')
-    const prepare = ref(null)
-    const image = ref(null)
-    const router = useRouter()
-
-    const onFileSelected = e => {
+  data() {
+    return {
+      name: '',
+      description: '',
+      prepare: null,
+      image: null,
+    }
+  },
+  methods: {
+    onFileSelected(e) {
       const file = e.target.files[0]
       if (!file.type.includes('image/')) {
         alert('Please select an image file')
@@ -37,30 +34,23 @@ export default {
       if (typeof FileReader === 'function') {
         const reader = new FileReader()
         reader.onload = event => {
-          image.value = event.target.result
+          this.image = event.target.result
         }
         reader.readAsDataURL(file)
       } else {
         alert('Sorry, this file is not supported')
       }
-    }
-
-    const handleSubmit = () => {
-      let recipe = {
+    },
+    handleSubmit() {
+      this.$store.dispatch('recipes/addRecipe', {
         id: Math.floor(Math.random() * 10000),
-        name: name.value,
-        description: description.value,
-        time_to_prepare: prepare.value,
-        image: image.value,
-      }
-      const result = computed(() => {
-        return store.commit('ADD_RECIPE', recipe)
+        name: this.name,
+        description: this.description,
+        time_to_prepare: this.prepare,
+        image: this.image,
       })
-
-      // router.push({ name: 'Home' })
-    }
-
-    return { handleSubmit, name, description, prepare, onFileSelected }
+      this.$router.push({ name: 'RecipesList' })
+    },
   },
 }
 </script>

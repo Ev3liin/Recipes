@@ -1,13 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home'
 import Create from '../views/Create'
+import RecipesList from '../views/RecipesList'
 import Details from '../views/Details'
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home,
+    redirect: '/recipes',
+  },
+  {
+    path: '/recipes',
+    name: 'RecipesList',
+    component: RecipesList,
   },
   {
     path: '/recipes/create',
@@ -19,12 +23,6 @@ const routes = [
     name: 'Details',
     component: Details,
     props: true,
-    children: [
-      {
-        path: 'update',
-        component: null,
-      },
-    ],
   },
   {
     path: '/notFound(.*)',

@@ -1,8 +1,10 @@
 <template>
   <header class="header">
-    <router-link class="logo" :to="{ name: 'Home' }">Recipes</router-link>
+    <router-link class="logo" :to="{ name: 'RecipesList' }"
+      >Recipes</router-link
+    >
     <nav>
-      <router-link :to="{ name: 'Home' }">Home</router-link>
+      <router-link :to="{ name: 'RecipesList' }">Recipes List</router-link>
       <router-link :to="{ name: 'Create' }">Create Recipe</router-link>
     </nav>
   </header>
