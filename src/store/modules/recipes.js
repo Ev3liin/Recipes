@@ -2,19 +2,15 @@ export default {
   namespaced: true,
   state: {
     recipes: [],
+    recipe: null,
   },
-  getters: {
-    getRecipeById: state => id => {
-      return state.recipes.find(recipe => recipe.id === id)
-    },
-  },
+  getters: {},
   mutations: {
     SET_RECIPES(state, recipes) {
       state.recipes = recipes
     },
-    ADD_RECIPE(state, recipe) {
-      state.recipes.push(recipe)
-      console.log('added', state.recipes)
+    GET_RECIPE(state, recipe) {
+      state.recipe = recipe
     },
   },
   actions: {
@@ -22,8 +18,23 @@ export default {
       const res = await fetch('http://localhost:3000/recipes')
       commit('SET_RECIPES', await res.json())
     },
-    addRecipe({ commit }, recipe) {
-      commit('ADD_RECIPE', recipe)
+    async addRecipe({ commit }, recipe) {
+      fetch('http://localhost:3000/recipes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(recipe),
+      })
+    },
+    async updateRecipe({ commit }, productId, recipe) {
+      fetch(`http://localhost:3000/recipes/${productId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(recipe),
+      })
+    },
+    async getRecipe({ commit }, productId) {
+      const res = await fetch(`http://localhost:3000/recipes/${productId}`)
+      commit('GET_RECIPE', await res.json())
     },
   },
 }
