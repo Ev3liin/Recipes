@@ -1,11 +1,8 @@
 <template>
-  <div v-if="recipes.length" class="list">
+  <div class="list">
     <div v-for="recipe in recipes" :key="recipe.id">
       <SingleRecipe :recipe="recipe" />
     </div>
-  </div>
-  <div v-else>
-    Loading...
   </div>
 </template>
 
@@ -13,18 +10,13 @@
 import SingleRecipe from './SingleRecipe'
 export default {
   components: { SingleRecipe },
-  data() {
-    return {
-      recipes: [],
-    }
+  computed: {
+    recipes() {
+      return this.$store.state.recipes.recipes
+    },
   },
   mounted() {
-    if (this.recipes.length == 0) {
-      this.$store.dispatch('recipes/fetchRecipes')
-      return (this.recipes = this.$store.state.recipes.recipes)
-    } else {
-      return (this.recipes = this.$store.state.recipes.recipes)
-    }
+    this.$store.dispatch('recipes/fetchRecipes')
   },
 }
 </script>
