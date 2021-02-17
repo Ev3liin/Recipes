@@ -17,7 +17,7 @@ export default {
 .recipe {
   margin: 20px auto;
   height: auto;
-  width: 300px;
+  min-width: 300px;
   background: #ffebde;
   border-radius: 20px;
   box-shadow: 5px 10px 15px #ccc;
