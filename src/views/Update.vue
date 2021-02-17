@@ -29,17 +29,17 @@ export default {
     recipe() {
       return this.$store.state.recipes.recipe
     },
-    // val() {
-    //   const val = {
-    //     name: (this.name = recipe.name),
-    //     description: (this.description = recipe.description),
-    //     image: (this.image = recipe.image),
-    //     prepare: (this.prepare = recipe.prepare),
-    //   }
-    // },
   },
   mounted() {
     this.$store.dispatch('recipes/getRecipe', this.id)
+
+    // const productId = async () => {
+    //   const res = await fetch(`http://localhost:3000/recipes/${this.id}`)
+    //   const data = await res.json()
+    //   this.name = data.name
+    //   this.description = data.description
+    // }
+    // productId()
   },
   methods: {
     onFileSelected(e) {
@@ -65,7 +65,7 @@ export default {
         time_to_prepare: this.prepare,
         image: this.image,
       })
-      this.$router.push({ name: 'RecipesList' })
+      //   this.$router.push({ name: 'Details' })
     },
   },
 }
