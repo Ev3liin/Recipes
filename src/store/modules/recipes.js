@@ -25,8 +25,8 @@ export default {
         body: JSON.stringify(recipe),
       })
     },
-    async updateRecipe({ commit }, productId, recipe) {
-      fetch(`http://localhost:3000/recipes/${productId}`, {
+    async updateRecipe({ commit }, { id, recipe }) {
+      fetch(`http://localhost:3000/recipes/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(recipe),
