@@ -15,6 +15,9 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const { mapActions } = createNamespacedHelpers('recipes')
+
 export default {
   data() {
     return {
@@ -41,14 +44,16 @@ export default {
         alert('Sorry, this file is not supported')
       }
     },
+    ...mapActions(['addRecipe']),
     handleSubmit() {
-      this.$store.dispatch('recipes/addRecipe', {
+      this.addRecipe({
         id: Math.floor(Math.random() * 10000),
         name: this.name,
         description: this.description,
         time_to_prepare: this.prepare,
         image: this.image,
       })
+
       this.$router.push({ name: 'RecipesList' })
     },
   },

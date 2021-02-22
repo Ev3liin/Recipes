@@ -8,15 +8,21 @@
 
 <script>
 import SingleRecipe from './SingleRecipe'
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapActions } = createNamespacedHelpers('recipes')
+
 export default {
   components: { SingleRecipe },
   computed: {
-    recipes() {
-      return this.$store.state.recipes.recipes
-    },
+    ...mapState({
+      recipes: state => state.recipes,
+    }),
+  },
+  methods: {
+    ...mapActions(['fetchRecipes']),
   },
   mounted() {
-    this.$store.dispatch('recipes/fetchRecipes')
+    this.fetchRecipes()
   },
 }
 </script>

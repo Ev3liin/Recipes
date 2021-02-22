@@ -20,15 +20,20 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapActions } = createNamespacedHelpers('recipes')
+
 export default {
-  props: ['id'],
   computed: {
-    recipe() {
-      return this.$store.state.recipes.recipe
-    },
+    ...mapState({
+      recipe: state => state.recipe,
+    }),
   },
   mounted() {
-    this.$store.dispatch('recipes/getRecipe', this.id)
+    this.getRecipe(this.$route.params.id)
+  },
+  methods: {
+    ...mapActions(['getRecipe']),
   },
 }
 </script>
