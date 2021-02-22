@@ -3,6 +3,7 @@ import Create from '../views/Create'
 import RecipesList from '../views/RecipesList'
 import Details from '../views/Details'
 import Update from '../views/Update'
+import NotFound from '../views/NotFound'
 
 const routes = [
   {
@@ -23,17 +24,16 @@ const routes = [
     path: '/recipes/:id',
     name: 'Details',
     component: Details,
-    props: true,
   },
   {
     path: '/recipes/:id/update',
     name: 'Update',
     component: Update,
-    props: true,
   },
   {
-    path: '/notFound(.*)',
-    component: null,
+    path: '/:catchAll(.*)',
+    name: 'NotFound',
+    component: NotFound,
   },
 ]
 
