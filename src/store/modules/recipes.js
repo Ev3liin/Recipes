@@ -36,5 +36,12 @@ export default {
       const res = await fetch(`http://localhost:3000/recipes/${productId}`)
       commit('GET_RECIPE', await res.json())
     },
+    async deleteRecipe({ commit }, { id, recipe }) {
+      fetch(`http://localhost:3000/recipes/${id}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(recipe),
+      })
+    },
   },
 }
