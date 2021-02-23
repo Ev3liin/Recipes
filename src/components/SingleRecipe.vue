@@ -1,28 +1,43 @@
 <template>
-  <router-link
-    class="details-link"
-    :to="{ name: 'Details', params: { id: recipe.id } }"
-  >
-    <div class="recipe">
+  <div class="recipe">
+    <router-link
+      class="details-link"
+      :to="{ name: 'Details', params: { id: recipe.id } }"
+    >
       <img class="img" :src="recipe.image" :alt="recipe.name" />
       <h3 class="title">{{ recipe.name }}</h3>
-      <p class="description">{{ snippet }}</p>
+    </router-link>
+    <p class="description">
+      {{ recipe.description.substring(0, 200) + '...' }}
+    </p>
+    <div class=" d-flex">
+      <router-link :to="{ name: 'Update', params: { id: recipe.id } }">
+        <button class="btn card-btn">Update</button>
+      </router-link>
+      <button @click="deleteThisRecipe" class="btn card-btn">Delete</button>
     </div>
-  </router-link>
+  </div>
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const { mapActions } = createNamespacedHelpers('recipes')
+
 export default {
   props: ['recipe'],
-  computed: {
-    snippet() {
-      return this.recipe.description.substring(0, 200) + '...'
+  methods: {
+    ...mapActions(['deleteRecipe', 'fetchRecipes']),
+    deleteThisRecipe() {
+      this.deleteRecipe({
+        id: this.recipe.id,
+      })
+      this.fetchRecipes()
     },
   },
 }
 </script>
 
-<style>
+<style scoped>
 .recipe {
   margin: 20px auto;
   height: auto;
@@ -37,12 +52,19 @@ export default {
 .recipe .description {
   color: #4e2906;
 }
+.d-flex {
+  display: flex;
+}
 .recipe .title {
   color: #ff8800;
   font-size: 25px;
 }
 .details-link {
   text-decoration: none;
+}
+.card-btn {
+  margin: 10px;
+  cursor: pointer;
 }
 .recipe:hover {
   box-shadow: 5px 10px 15px #a7a2a2;

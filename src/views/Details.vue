@@ -16,6 +16,9 @@
     >
       <span class="btn btn-update">Update Recipe</span>
     </router-link>
+    <router-link class="update-link" :to="{ name: 'RecipesList' }">
+      <span class="btn btn-update" @click="deleted">Delete</span>
+    </router-link>
   </div>
 </template>
 
@@ -33,14 +36,30 @@ export default {
     this.getRecipe(this.$route.params.id)
   },
   methods: {
-    ...mapActions(['getRecipe']),
+    ...mapActions(['getRecipe', 'deleteRecipe']),
+    deleted() {
+      this.deleteRecipe({
+        id: this.$route.params.id,
+      })
+    },
   },
 }
 </script>
 
-<style>
+<style scoped>
 .details {
-  width: 1000px !important;
+  margin: 20px auto;
+  height: auto;
+  background: #ffebde;
+  border-radius: 20px;
+  box-shadow: 5px 10px 15px #ccc;
+  padding: 30px;
+  transition-duration: 0.8px;
+  max-width: 1000px;
+}
+.img {
+  max-height: 40vh;
+  margin: 20px;
 }
 .update-link {
   text-decoration: none;
