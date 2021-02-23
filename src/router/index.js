@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Create from '../views/Create'
+// import Create from '../views/Create'
 import RecipesList from '../views/RecipesList'
 import Details from '../views/Details'
-import Update from '../views/Update'
+import Form from '../components/Form'
+// import Update from '../views/Update'
 import NotFound from '../views/NotFound'
 
 const routes = [
@@ -18,7 +19,7 @@ const routes = [
   {
     path: '/recipes/create',
     name: 'Create',
-    component: Create,
+    component: Form,
   },
   {
     path: '/recipes/:id',
@@ -28,7 +29,7 @@ const routes = [
   {
     path: '/recipes/:id/update',
     name: 'Update',
-    component: Update,
+    component: Form,
   },
   {
     path: '/:catchAll(.*)',
