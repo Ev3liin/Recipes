@@ -5,20 +5,17 @@
       <img class="img" :src="recipe.image" :alt="recipe.name" />
       <div>
         <p class="description-p">{{ recipe.description }}</p>
-        <p class="description-p ">
-          Time to Prepare: {{ recipe.time_to_prepare }} minutes
-        </p>
+        <p class="description-p ">Time to Prepare: {{ recipe.time_to_prepare }} minutes</p>
       </div>
     </div>
-    <router-link
-      class="update-link"
-      :to="{ name: 'Update', params: { id: recipe.id } }"
-    >
-      <span class="btn btn-update">Update Recipe</span>
-    </router-link>
-    <router-link class="update-link" :to="{ name: 'RecipesList' }">
-      <span class="btn btn-update" @click="deleted">Delete</span>
-    </router-link>
+    <div class="flex">
+      <router-link class="update-link" :to="{ name: 'Update', params: { id: recipe.id } }">
+        <span class="btn">Update Recipe</span>
+      </router-link>
+      <router-link class="update-link" :to="{ name: 'RecipesList' }">
+        <span class="btn" @click="deleted">Delete</span>
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -47,6 +44,9 @@ export default {
 </script>
 
 <style scoped>
+.flex {
+  display: flex;
+}
 .details {
   margin: 20px auto;
   height: auto;
@@ -60,6 +60,13 @@ export default {
 .img {
   max-height: 40vh;
   margin: 20px;
+}
+.btn {
+  margin: 10px;
+  padding: 10px;
+  color: #fff;
+  background: #ff8800;
+  cursor: pointer;
 }
 .update-link {
   text-decoration: none;

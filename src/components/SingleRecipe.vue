@@ -1,9 +1,6 @@
 <template>
   <div class="recipe">
-    <router-link
-      class="details-link"
-      :to="{ name: 'Details', params: { id: recipe.id } }"
-    >
+    <router-link class="details-link" :to="{ name: 'Details', params: { id: recipe.id } }">
       <img class="img" :src="recipe.image" :alt="recipe.name" />
       <h3 class="title">{{ recipe.name }}</h3>
     </router-link>
@@ -11,10 +8,10 @@
       {{ recipe.description.substring(0, 200) + '...' }}
     </p>
     <div class=" d-flex">
-      <router-link :to="{ name: 'Update', params: { id: recipe.id } }">
-        <button class="btn card-btn">Update</button>
+      <router-link class="link" :to="{ name: 'Update', params: { id: recipe.id } }">
+        <button class="btn">Update</button>
       </router-link>
-      <button @click="deleteThisRecipe" class="btn card-btn">Delete</button>
+      <button @click="deleteThisRecipe" class="btn">Delete</button>
     </div>
   </div>
 </template>
@@ -38,9 +35,12 @@ export default {
 </script>
 
 <style scoped>
+.link {
+  text-decoration: none;
+}
 .recipe {
   margin: 20px auto;
-  height: auto;
+  height: 400px;
   min-width: 300px;
   max-width: 500px;
   background: #ffebde;
@@ -62,8 +62,13 @@ export default {
 .details-link {
   text-decoration: none;
 }
-.card-btn {
+
+.btn {
   margin: 10px;
+  padding: 10px;
+  color: #fff;
+  background: #ff8800;
+  border: none;
   cursor: pointer;
 }
 .recipe:hover {
