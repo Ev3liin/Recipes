@@ -3,6 +3,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import RecipesList from '../views/RecipesList'
 import Details from '../views/Details'
 import Form from '../components/Form'
+import Login from '../components/auth/Login'
+import Signup from '../components/auth/Signup'
 // import Update from '../views/Update'
 import NotFound from '../views/NotFound'
 
@@ -15,6 +17,16 @@ const routes = [
     path: '/recipes',
     name: 'RecipesList',
     component: RecipesList,
+  },
+  {
+    path: '/signup',
+    name: 'Signup',
+    component: Signup,
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
   },
   {
     path: '/recipes/create',
