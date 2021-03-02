@@ -18,14 +18,14 @@ export default {
       const res = await fetch('http://localhost:3000/recipes')
       commit('SET_RECIPES', await res.json())
     },
-    async addRecipe({ commit }, recipe) {
+    async addRecipe(_, recipe) {
       fetch('http://localhost:3000/recipes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(recipe),
       })
     },
-    async updateRecipe({ commit }, { id, recipe }) {
+    async updateRecipe(_, { id, recipe }) {
       fetch(`http://localhost:3000/recipes/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },

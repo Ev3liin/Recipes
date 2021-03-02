@@ -7,7 +7,7 @@
     <p class="description">
       {{ recipe.description.substring(0, 200) + '...' }}
     </p>
-    <div class=" d-flex">
+    <div v-if="login" class=" d-flex">
       <router-link class="link" :to="{ name: 'Update', params: { id: recipe.id } }">
         <button class="btn">Update</button>
       </router-link>
@@ -19,9 +19,15 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 const { mapActions } = createNamespacedHelpers('recipes')
+const { mapState: usersMapState } = createNamespacedHelpers('users')
 
 export default {
   props: ['recipe'],
+  computed: {
+    ...usersMapState({
+      login: state => state.isLoggedIn,
+    }),
+  },
   methods: {
     ...mapActions(['deleteRecipe', 'fetchRecipes']),
     deleteThisRecipe() {
@@ -29,6 +35,9 @@ export default {
         id: this.recipe.id,
       })
       this.fetchRecipes()
+    },
+    tt() {
+      console.log(this.login)
     },
   },
 }

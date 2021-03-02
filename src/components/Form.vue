@@ -1,6 +1,6 @@
 <template>
   <div class="create">
-    <form class="form" @submit.prevent="handleSubmit" @clearForm="clear">
+    <form class="form" @submit.prevent="handleSubmit">
       <button @click="back" class="btn">Go Back</button>
       <label class="label">Title:</label>
       <input class="input" v-model="name" type="text" required />
@@ -17,7 +17,8 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
-const { mapState, mapActions } = createNamespacedHelpers('recipes')
+const { mapState: recipesMapState, mapActions } = createNamespacedHelpers('recipes')
+const { mapState: usersMapState } = createNamespacedHelpers('users')
 
 export default {
   data() {
@@ -29,7 +30,10 @@ export default {
     }
   },
   computed: {
-    ...mapState({
+    ...usersMapState({
+      login: state => state.isLoggedIn,
+    }),
+    ...recipesMapState({
       recipe: state => state.recipe,
     }),
   },
@@ -39,6 +43,11 @@ export default {
         this.name = this.recipe.name
         this.description = this.recipe.description
         this.prepare = this.recipe.time_to_prepare
+      }
+    },
+    $route() {
+      if (this.$route.fullPath === '/recipes/create') {
+        ;(this.name = ''), (this.description = ''), (this.prepare = null)
       }
     },
   },
@@ -51,10 +60,6 @@ export default {
     ...mapActions(['addRecipe', 'getRecipe', 'updateRecipe']),
     back() {
       this.$router.go(-1)
-    },
-
-    clear() {
-      ;(this.name = ''), (this.description = ''), (this.prepare = nul)
     },
 
     onFileSelected(e) {
@@ -106,54 +111,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.form {
-  max-width: 480px;
-  margin: 0 auto;
-  text-align: left;
-}
-.input,
-.textarea {
-  display: block;
-  margin: 10px 0;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 10px;
-  outline: none;
-  border: 1px solid #eee;
-}
-.textarea {
-  height: 160px;
-}
-.label {
-  display: inline-block;
-  margin-top: 30px;
-  position: relative;
-  font-size: 20px;
-  color: white;
-  margin-bottom: 10px;
-}
-.label::before {
-  content: '';
-  display: block;
-  width: 100%;
-  height: 100%;
-  background: #ff8800;
-  position: absolute;
-  z-index: -1;
-  padding-right: 40px;
-  left: -30px;
-  transform: rotateZ(-1.5deg);
-}
-.btn {
-  display: block;
-  margin-top: 30px;
-  background: #ff8800;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  font-size: 18px;
-  outline: none;
-}
-</style>

@@ -8,7 +8,7 @@
         <p class="description-p ">Time to Prepare: {{ recipe.time_to_prepare }} minutes</p>
       </div>
     </div>
-    <div class="flex">
+    <div v-if="login" class="flex">
       <router-link class="update-link" :to="{ name: 'Update', params: { id: recipe.id } }">
         <span class="btn">Update Recipe</span>
       </router-link>
@@ -21,12 +21,16 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
-const { mapState, mapActions } = createNamespacedHelpers('recipes')
+const { mapState: recipesMapState, mapActions } = createNamespacedHelpers('recipes')
+const { mapState: usersMapState } = createNamespacedHelpers('users')
 
 export default {
   computed: {
-    ...mapState({
+    ...recipesMapState({
       recipe: state => state.recipe,
+    }),
+    ...usersMapState({
+      login: state => state.isLoggedIn,
     }),
   },
   mounted() {
